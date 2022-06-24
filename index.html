@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,8 +12,14 @@
 </head>
 <body>
     <div class="login-box">
-        <h2 class="login-box__welcome-heading">Zaloguj się</h2>
-        
+        <h2 class="login-box__welcome-heading">Witaj</h2>
+        <form class="login-box__form">
+            <label for="mail">Adres e-mail</label>
+            <input type="text" class="login-box__form__mail" name="mail" required>
+            <label for="passwd">Hasło</label>
+            <input type="password" class="login-box__form__passwd" name="passwd">
+            <input type="submit" value="Zaloguj się" class="login-box__form__submit">
+        </form>
     </div>
 </body>
 </html>

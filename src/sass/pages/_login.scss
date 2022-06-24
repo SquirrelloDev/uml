@@ -1,3 +1,49 @@
 @use '../base/' as *;
 @use '../utils/' as *;
 
+.login-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 4em;
+    border: 1px solid $v-light-gray;
+    border-radius: 15px;
+    background-color: $white;
+    &__welcome-heading{
+        font-size: calc($large + 1rem);
+        margin-top: 0.5em;
+        margin-bottom: .75em;
+    }
+    &__form{
+        display: flex;
+        flex-direction: column;
+        input{
+            margin-top: 0.35em;
+            margin-bottom: 1em;
+            padding: .5em 2em;
+            padding-left: 1em;
+        }
+        &__mail,&__passwd{
+            border: 1px solid $light-gray;
+            border-radius: 4px;
+            outline: none;
+            &:focus{
+                border: 1px solid $v-light-gray;
+            }
+        }
+        &__submit{
+            margin-top: 0.5em;
+            background-color: $blueish;
+            color: $white;
+            font-size: $standard;
+            border: none;
+            border-radius: 4px;
+            transition: background-color .3s;
+            cursor: pointer;
+            &:hover{
+                background-color: $blueish-dark;
+            }
+        }
+
+    }
+}

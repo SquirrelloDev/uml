@@ -8,12 +8,11 @@ html
 body
 {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     font-size: $standard;
     font-family: $family;
     background-color: $almost-white;
-}
-.stop-scroll{
-    height: 100%;
-    overflow: hidden;
 }
