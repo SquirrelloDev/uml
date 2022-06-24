@@ -1,0 +1,39 @@
+@startuml Order
+
+(*) --> if "Client is logged on" then 
+        -->[yes] "Show main view"
+    else 
+        -->[no] "Log in"
+        --> "Show main view"
+    endif 
+    --> "Create Order"
+    --> "Fill required fields"
+    --> "Confirm Order"
+    --> "Send Order to Mechanics"
+    --> "Bring vehicle to Service"
+    --> if "Vehicle fixed" as i1 then
+        -->[yes] "Change order status to pending"
+        --> "Proceed to payment"
+            if "Recepit type" then
+                -->[Classic] "Advance to payment method"
+            else
+                -->[invoice] "Fill mandatory fields"
+            endif
+        --> "Advance to payment method"
+        --> if "Payment method" then
+                -->[card] "Rediret to card service"
+                --> Verify payment 
+                --> "Send confirmation mail with chosen receipt type"
+            else
+                -->[transfer] "Show payment details"
+                --> "Wait till payment arrive"
+                --> "Send confirmation mail with chosen receipt type"
+            endif
+        --> "Close Order"
+        --> "Recieve vehicle"
+        --> (*)
+    else
+        -->[no] "Wait until vehicle is being fixed"
+        --> i1
+    endif
+@enduml

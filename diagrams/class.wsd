@@ -1,0 +1,156 @@
+@startuml class diagram
+package CarService{
+abstract class Vehicle {
+    +Id : int
+    #Brand : String
+    #Model : String
+    #Year of production : int
+    #Engine Capacity : int
+    #Mileage : int
+    #Horsepower : int
+    #Gearbox Type : String
+    #Fuel Type : String
+    
+    #{abstract} getInfo()
+}
+class Car{
+    -Car plate number : int
+    -VIN : int
+    -Version : string
+    -Number of Doors : int
+    -Type[String]
+    +getInfo() : void
+}
+class Truck{
+    -Car plate number : int
+    -VIN : int
+    +getInfo() : void
+}
+class CarPart {
+   +PartId : int
+   -Name : String
+   -PartCategory[String]
+   -Condition : int
+}
+
+class Issue{
+    +Name : String
+    -Issue Category : String
+    -Importance : ImportanceScale
+    -Parts Required[] : CarPart
+}
+enum ImportanceScale{
+    Mild
+    Essential
+    Crucial
+}
+
+class ServiceOrder{
+    +ServiceId : int
+    -OrderDate : Date
+    -CompletionDate : Date
+    -Customer : Customer
+    -ServicedVehicle : Vehicle
+    -Description : string
+    -isActive : bool
+    -Recepit/Invoice id : int
+}
+
+}
+class ServiceOrderManager{
+    -Allowed Employees[] : Employee
+    +createOrder() : void
+    +closeOrder() : void
+    ' part of closeOrder()
+    +generateRecepit() : void
+}
+package Accounts{
+abstract class User{
+    +User Id : int
+    #User name : string
+    #Display Name : string
+    #Mail address : string
+    #Password : string
+
+    #{abstract} getUser()
+}
+class Customer{
+    -Active Services[] : ServiceOrder
+    -Closed Services[] : ServiceOrder
+    -Registered Vehicles[] : Vehicle
+
+    +getUser() : void
+}
+class Admin{
+    +Change Assigment(Employee e) : void
+    +Add Employee() : void
+    +Change Salary(Employee e) : void
+    +Change Credentials(User u) : void
+    +Delete User(User u) : void
+
+}
+class Employee{
+    -Assigment : Assigments
+    -Salary : float
+
+    +getUser() : void
+}
+class Mechanic{
+    -Qualifications[] : string
+
+}
+enum Assigments{
+    Helpdesk
+    Cleaner
+    Warehouseman
+    Mechanic
+    Mechanic Support
+    Admin
+}
+}
+package Buisness{
+class Invoice{
+    +Id : int
+    -NIP : int
+    -Customer : Customer
+    -Description : string
+    -Price : float
+    +getInfo() : void
+}
+class Recepit{
+    +Id : int
+    -Description : string
+    -Price : float
+     +getInfo() : void
+}
+}
+
+Interface DAO{
+    selectOrders(query):Order[]
+    insertOrder(p:Order):bool
+    updateOrder(p:Order):bool
+    deleteOrder(p:Order):bool
+}
+class ServiceDB{
+ +SendStaus() : void
+ +RecieveStatus() : void
+}
+ServiceDB -|> DAO
+ServiceOrderManager - ServiceDB
+Car --|> Vehicle
+Truck --|> Vehicle
+Issue -- ImportanceScale
+Issue --o CarPart
+ServiceOrder <--> Vehicle
+ServiceOrder o---> "1" Customer
+ServiceOrderManager -- ServiceOrder
+ServiceOrderManager -- Invoice
+ServiceOrderManager -- Recepit
+
+Vehicle --> "1" Customer
+Employee -- Assigments
+Customer --|> User
+Employee --|> User
+Mechanic --|> Employee
+Admin --|> Employee
+@enduml

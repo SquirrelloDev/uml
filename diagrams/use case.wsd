@@ -1,0 +1,47 @@
+@startuml useCase
+actor Person
+actor Customer
+actor Mechanic
+actor Admin
+actor Employee
+
+usecase "request service" as rs
+usecase "pay for service" as pfs
+usecase "get invoice" as gi
+usecase "login to system" as lts
+usecase "generate request" as gr
+
+usecase "add part" as ap
+usecase "show request" as sr
+usecase "complete request" as cr
+usecase "create issue" as ci
+usecase "edit request" as er
+
+usecase "view website" as vw
+usecase "accept order" as ao
+usecase "genereate invoice" as gri
+
+Person -- vw
+Employee --- lts
+Employee -- sr
+Employee -- gr
+
+Customer -- lts
+Customer -- gi
+Customer -- pfs
+Customer -- sr
+Customer -- rs
+
+Mechanic -- cr
+Mechanic -- ap
+Mechanic -- ci
+ao -- ap : <<includes>>
+Admin -- lts
+Admin -- ao
+Admin -- er
+gri -- cr : <<includes>>
+Customer --|> Person : <<extends>>
+Employee --|> Person : <<extends>>
+Mechanic --|> Employee : <<extends>>
+Admin --|> Employee : <<extends>>
+@enduml

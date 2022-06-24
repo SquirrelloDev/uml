@@ -1,0 +1,95 @@
+@startuml Sequence
+actor Client
+actor Mechanic
+'TODD Missing Shop object in Class/Object diagram
+Client -> ServiceWeb : log in  
+alt proper username and password
+    return : status = OK, show MainView
+
+else wrong username and password
+    return : status = FAIL 
+loop 5 times 
+    Client -> ServiceWeb : try to log in
+    return status
+end
+end
+
+Client -> ServiceOrderManager : open order wizard
+alt fetched data from Server
+    return : status = OK, display wizard view
+else error when fetching data
+    return status = FAIL, try again
+    loop until data fetching has status FAIL
+    ServiceWeb -> ServiceDB : fetch data
+    return status
+    end
+end
+loop until all neccesary data are not passed
+    Client -> ServiceOrderManager : pass data
+end
+
+alt all mandatory fields filled
+    ServiceOrderManager -> ServiceDB : sent query to DB
+else fiels not filled
+    return status = some fields are empty
+    ServiceOrderManager -> ServiceWeb : Send Info of bad status
+    ServiceWeb -> Client : Display Information
+else error with DB connection
+    return status = TIMEOUT
+end
+
+Mechanic -> ServiceDB : get Order from DB
+alt fetched order data properly
+    return status = OK, print order
+else error when fetching data
+    return status = FAIL, try again
+    loop until all data are not fetched
+    ServiceDB -> Mechanic : fetch
+    return status
+    end
+end
+
+loop until car is being fixed
+Mechanic -> Vehicle : fix car 
+Vehicle -> Mechanic : await for next fix if exist
+end
+Mechanic -> ServiceOrderManager : send pending order operation
+ServiceOrderManager -> ServiceDB : send query
+alt query sent
+    return status = pending
+    ServiceOrderManager -> ServiceWeb : send information
+    'Order Mail Server (element of ServiceWeb) to send an email  
+    ServiceWeb -> Client : Display Information
+end
+Client -> ServiceWeb : declare payment for service
+
+
+ServiceWeb -> Client : select payment method
+ServiceWeb -> Client : select recepit type
+
+ServiceWeb -> Bank : send payment request
+alt request sent without errors
+    return procced to bank payment site
+end
+alt card payment
+    Client -> ServiceWeb : card payment
+    ServiceWeb -> Bank : proceed with payment
+    Bank -> Client : pay
+    return
+    Bank -> ServiceWeb : payment finalized
+else transfer payment
+    Client -> ServiceWeb : transfer payment
+    ServiceWeb -> Client: show transfer details
+    return 
+    ServiceWeb -> ServiceWeb : wait for payment
+end
+ServiceWeb -> ServiceWeb : send confirmation mail
+ServiceOrderManager -> ServiceDB : send close order operation
+ServiceDB -> ServiceDB : change order to closed
+alt order closed
+    return status = CLOSED
+    ServiceDB -> ServiceWeb : Send status
+end
+Bank -> ServiceWeb : return to web view
+ServiceWeb -> Client : Display success state
+@enduml
