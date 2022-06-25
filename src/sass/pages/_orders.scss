@@ -34,13 +34,16 @@
     }
 }
 .order-box{
-    display: grid;
     padding: 2em; 
     min-height: 50vh;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 10% 80% 10%;
     border: 1px solid $light-gray;
     border-radius: 8px;
+    &__active-order{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 10% 80% 10%;
+
+    }
     &__order-id{
         grid-area: 1 / 1 / 2 / 2;
         align-self: center;
@@ -81,6 +84,32 @@
         &:disabled{
             background-color: $light-gray;
             color: $black;
+        }
+    }
+    &__all-orders{
+        height: 80%;
+        &__category-heading{
+            text-transform: uppercase;
+            margin-bottom: .5em;
+        }
+        &__orders-list{
+            list-style-type: none;
+        }
+        &__orders-list-box{
+            overflow-y: scroll;
+            height: 250px;
+        }
+        &__list-item{
+            margin: 0.75em 0.5em;
+            padding: 1em;
+            border: 1px solid $light-gray; 
+            transition: background-color .3s;
+            border-radius: 8px;
+            cursor: pointer;
+            &:hover{
+                color: $white;
+                background-color: $blueish;
+            }
         }
     }
 }

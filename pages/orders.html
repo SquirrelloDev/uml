@@ -11,14 +11,8 @@
     <title>Panel</title>
 </head>
 <body>
-    <div class="container">
-        <nav class="options">
-            <button class="options__btn">aktywne</button>
-            <button class="options__btn">zamknięte</button>
-            <button class="options__btn">dodaj +</button>
-            <a class="options__btn" href="../index.html">Wyloguj</a>
-        </nav>
-        <div class="order-box">
+    <template class="order-template">
+        <div class="order-box__active-order">
             <h2 class="order-box__order-id">ewfwfwf</h2>
             <p class="order-box__date-order">wefwefwfewef</p>
             <div class="order-box__details">
@@ -46,6 +40,29 @@
             </div>
             <p class="order-box__recepit">Rachunek</p>
             <button class="order-box__recepit-btn">Pobierz</button>
+        </div> 
+    </template>
+    <template class="all-orders-template">
+        <div class="order-box__all-orders">
+            <h2 class="order-box__all-orders__category-heading">Aktywne</h2>
+            <div class="order-box__all-orders__orders-list-box">
+                <ul class="order-box__all-orders__orders-list">
+                    <li class="order-box__all-orders__list-item">Ogłoszenie 1</li>
+                    <li class="order-box__all-orders__list-item">Ogłoszenie 1</li>
+                </ul>
+            </div>
+        </div>
+    </template>
+    
+    <div class="container">
+        <nav class="options">
+            <button class="options__btn">aktywne</button>
+            <button class="options__btn">zamknięte</button>
+            <button class="options__btn">dodaj +</button>
+            <a class="options__btn" href="../index.html">Wyloguj</a>
+        </nav>
+        <div class="order-box">
+
         </div>
     </div>
 </body>
