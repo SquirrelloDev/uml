@@ -64,6 +64,13 @@ class ServiceOrderManager{
     ' part of closeOrder()
     +generateRecepit() : void
 }
+Interface ServiceWeb{
+    'represents our web page
+    +get(Object object) : Object
+    +post(Object object) : bool
+    +put(Object object) : bool
+    +delete(Object object) : bool
+}
 package Accounts{
 abstract class User{
     +User Id : int
@@ -136,7 +143,9 @@ class ServiceDB{
  +RecieveStatus() : void
 }
 ServiceDB -|> DAO
-ServiceOrderManager - ServiceDB
+ServiceOrderManager - ServiceWeb
+ServiceWeb - ServiceDB
+User - ServiceWeb
 Car --|> Vehicle
 Truck --|> Vehicle
 Issue -- ImportanceScale
@@ -146,6 +155,8 @@ ServiceOrder o---> "1" Customer
 ServiceOrderManager -- ServiceOrder
 ServiceOrderManager -- Invoice
 ServiceOrderManager -- Recepit
+
+
 
 Vehicle --> "1" Customer
 Employee -- Assigments
