@@ -22,8 +22,7 @@ class Car{
     +getInfo() : void
 }
 class Truck{
-    -Car plate number : int
-    -VIN : int
+    -axisPlacement : int
     +getInfo() : void
 }
 class CarPart {
@@ -38,6 +37,7 @@ class Issue{
     -Issue Category : String
     -Importance : ImportanceScale
     -Parts Required[] : CarPart
+    +AddPart(CarPart cp) : void
 }
 enum ImportanceScale{
     Mild
@@ -58,7 +58,6 @@ class ServiceOrder{
 
 }
 class ServiceOrderManager{
-    -Allowed Employees[] : Employee
     +createOrder() : void
     +closeOrder() : void
     ' part of closeOrder()
@@ -85,7 +84,7 @@ class Customer{
     -Active Services[] : ServiceOrder
     -Closed Services[] : ServiceOrder
     -Registered Vehicles[] : Vehicle
-
+    -Recepites [] : Recepit
     +getUser() : void
 }
 class Admin{
@@ -117,7 +116,6 @@ enum Assigments{
 }
 package Buisness{
 class Invoice{
-    +Id : int
     -NIP : int
     -Customer : Customer
     -Description : string
@@ -149,12 +147,14 @@ User - ServiceWeb
 Car --|> Vehicle
 Truck --|> Vehicle
 Issue -- ImportanceScale
+Issue -- Vehicle
 Issue --o CarPart
 ServiceOrder <--> Vehicle
 ServiceOrder o---> "1" Customer
 ServiceOrderManager -- ServiceOrder
 ServiceOrderManager -- Invoice
 ServiceOrderManager -- Recepit
+Invoice -|> Recepit
 
 
 

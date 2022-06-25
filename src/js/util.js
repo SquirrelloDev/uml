@@ -2,7 +2,7 @@
 //     return;
 // }
 
-import { userDB } from "./fakeDB.js";
+import { ServiceDB } from "./fakeDB.js";
 
 class Login{
     constructor(){
@@ -13,13 +13,13 @@ class Login{
         const mailBox = loginform.querySelector('.login-box__form__mail');
         const passwdBox = loginform.querySelector('.login-box__form__passwd');
         const submitBtn = loginform.querySelector('.login-box__form__submit');
-        
+        const sdb = new ServiceDB();
         submitBtn.addEventListener('click', (e)=>{
             e.preventDefault();
             if(mailBox.value === '' || !mailBox.value.match(/[@]/) || passwdBox.value === ''){
                 return;
             }
-            for (const user of userDB) {
+            for (const user of sdb.userDB) {
                 if(mailBox.value.match(user.mail) && passwdBox.value.match(user.passwd)){
                     window.location.replace('../../pages/orders.html');
                 }
